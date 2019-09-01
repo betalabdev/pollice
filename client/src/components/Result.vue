@@ -45,7 +45,8 @@ export default {
                 this.votes[vote._id] = vote.count;
                 this.totalVotes += vote.count;
             });
-            this.question.answers = this.question.answers.map(answer => Object.assign(answer, { votes: this.votes[answer._id] || 0 }));
+            this.question.answers = this.question.answers
+            .map(answer => Object.assign(answer, { votes: this.votes[answer._id] || 0 }));
         })
         .catch((error) => {
             error.request.res.destroy()
