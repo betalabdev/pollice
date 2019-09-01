@@ -1,0 +1,13 @@
+{
+  "name": "pollice",
+  "version": "0.1",
+  "description": "polls in presentations",
+  "content_scripts": [
+    {
+      "matches": ["https://docs.google.com/presentation/*"],
+      "js": ["page.js"],
+      "all_frames": true
+    }
+  ],
+  "manifest_version": 2
+}
