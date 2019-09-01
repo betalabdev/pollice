@@ -13,7 +13,7 @@ var votesRouter = require('./routes/votes');
 var resultsRouter = require('./routes/results');
 
 var corsOptions = {
-  origin: 'http://localhost:8080',
+  origin: 'http://127.0.0.1:8080',
   optionsSuccessStatus: 200
 }
 

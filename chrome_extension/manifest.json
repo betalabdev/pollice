@@ -4,7 +4,7 @@
   "description": "polls in presentations",
   "content_scripts": [
     {
-      "matches": ["https://docs.google.com/presentation/*"],
+      "matches": ["https://docs.google.com/presentation/*", "http://localhost:3000/*"],
       "js": ["page.js"],
       "all_frames": true
     }
