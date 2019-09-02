@@ -1,6 +1,6 @@
 var glob
 
-function addOverlay(el, id, autostart) {
+function addOverlay(el, id, wait) {
     var bbox = el.getBBox()
     var div = document.createElement('div')
 
@@ -48,10 +48,10 @@ function addOverlay(el, id, autostart) {
         })
     }
 
-    if (autostart) {
-        addIframe()
-    } else {
+    if (wait) {
         div.addEventListener('mousedown', addIframe)
+    } else {
+        addIframe()
     }
 
     glob = div
@@ -73,8 +73,8 @@ function scanListener() {
         var v = poll.getAttribute('xlink:href').match(/.*^#poll=(.+)$/)
         if (v) {
             var rest = v[1]
-            rest = rest.replace(/,autostart$/g, '')
-            addOverlay(poll, rest, v[1].match(/,autostart$/) != null)
+            rest = rest.replace(/,wait$/g, '')
+            addOverlay(poll, rest, v[1].match(/,wait$/) != null)
         } else {
             poll._skiip_poll = true
         }
