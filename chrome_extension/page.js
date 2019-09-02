@@ -25,7 +25,7 @@ function addOverlay(el, id, autostart) {
         }
         top.navigator.keyboard.lock()
         div.innerHTML =
-            '<iframe style="border:0" src="http://127.0.0.1:8080/#/' +
+            '<iframe style="border:0" src="http://127.0.0.1:8080/#/result/' +
             id +
             '" width="100%" height="100%"></iframe>'
         if (e) {

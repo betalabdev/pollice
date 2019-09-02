@@ -9,9 +9,9 @@ Vue.use(VueRouter)
 Vue.config.productionTip = false
 
 const routes = [
-  { path: '/:questionId', component: Result },
   { path: '/poll', component: Poll },
   { path: '/vote/:questionId', component: Vote },
+  { path: '/result/:questionId', component: Result },
 ]
 
 const router = new VueRouter({
