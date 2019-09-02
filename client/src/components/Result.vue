@@ -36,7 +36,7 @@ export default {
         api.getResult(this.questionId, (err, question) => {
             if (!err) this.$store.dispatch('result/setResult', question)
         })
-        this.$wsConnect()
+        this.$wsConnect(this.questionId)
     },
     methods: {
         calculatePercent(votes) {

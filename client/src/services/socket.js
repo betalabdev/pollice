@@ -5,8 +5,8 @@ export default {
         let ws = new WebSocket(options.url)
         let reconnectInterval = options.reconnectInterval || 1000
 
-        Vue.prototype.$wsConnect = () => {
-            let ws = new WebSocket(options.url)
+        Vue.prototype.$wsConnect = (questionId) => {
+            ws = new WebSocket(options.url + "?questionId=" + questionId)
 
             ws.onopen = () => {
                 reconnectInterval = options.reconnectInterval || 1000
@@ -28,7 +28,7 @@ export default {
                                 // Reconnect interval can't be > x seconds
                                 reconnectInterval += 1000
                             }
-                            Vue.prototype.$wsConnect()
+                            Vue.prototype.$wsConnect(questionId)
                         }, reconnectInterval)
                     }
                 }

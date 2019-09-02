@@ -1,3 +1,4 @@
+const url = require('url')
 const WebSocket = require('ws')
 
 let wss
@@ -6,8 +7,11 @@ module.exports = {
     init(server) {
         wss = new WebSocket.Server({ server })
 
-        wss.on('connection', ws => {
+        wss.on('connection', (ws, req) => {
+            const parameters = url.parse(req.url, true)
+
             ws.isAlive = true
+            ws.questionId = parameters.query.questionId
 
             ws.on('pong', () => {
                 ws.isAlive = true
@@ -29,9 +33,10 @@ module.exports = {
         return wss
     },
 
-    send(data) {
+    send(questionId, data) {
         wss.clients.forEach(ws => {
-            if (ws.isAlive) ws.send(JSON.stringify(data))
+            if (ws.isAlive && ws.questionId == questionId)
+                ws.send(JSON.stringify(data))
         })
     },
 }
