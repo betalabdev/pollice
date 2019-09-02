@@ -30,7 +30,7 @@ Load unpacked from `chrome_extension` folder.
 
 ## Quick start
 
-1. Create poll from localhost:8080, get question id from response, e.g. `5d6bca941d58c724cf712ee3`.
+1. Create poll from http://127.0.0.1:8080, get question id from response, e.g. `5d6bca941d58c724cf712ee3`.
 
 2. Insert a shape in your Google Slides presentation, add hyper link to `#poll=5d6bca941d58c724cf712ee3`.
 
