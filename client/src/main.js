@@ -4,11 +4,20 @@ import Poll from './components/Poll'
 import Vote from './components/Vote'
 import Result from './components/Result'
 import VueRouter from 'vue-router'
+import VueWebsocket from './services/socket'
+
+import store from './store'
 
 Vue.use(VueRouter)
+Vue.use(VueWebsocket, {
+  store,
+  url: "ws://127.0.0.1:3000"
+})
+
 Vue.config.productionTip = false
 
 const routes = [
+  { path: '/', redirect: '/poll' },
   { path: '/poll', component: Poll },
   { path: '/vote/:questionId', component: Vote },
   { path: '/result/:questionId', component: Result },
@@ -19,6 +28,8 @@ const router = new VueRouter({
 })
 
 new Vue({
+  el: '#app',
   render: h => h(App),
-  router
-}).$mount('#app')
+  router,
+  store,
+})

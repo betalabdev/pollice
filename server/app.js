@@ -1,33 +1,40 @@
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
-var mongoose = require('mongoose');
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const logger = require('morgan')
+const mongoose = require('mongoose')
+const http = require('http')
 
-mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true});
-mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+const socket = require('./services/socket')
+const cors = require('./services/cors')
+const env = require('./config/env')
 
-var indexRouter = require('./routes/index');
-var pollsRouter = require('./routes/polls');
-var votesRouter = require('./routes/votes');
-var resultsRouter = require('./routes/results');
+mongoose.connect(env.mongodbUrl, { useNewUrlParser: true })
+mongoose.connection.on(
+    'error',
+    console.error.bind(console, 'connection error:')
+)
 
-var corsOptions = {
-  origin: 'http://127.0.0.1:8080',
-  optionsSuccessStatus: 200
-}
+const indexRouter = require('./routes/index')
+const pollsRouter = require('./routes/polls')
+const votesRouter = require('./routes/votes')
+const resultsRouter = require('./routes/results')
 
-var app = express();
+const app = express()
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
+app.use(cors.init())
 
-app.use('/', indexRouter);
-app.use('/polls', pollsRouter);
-app.use('/votes', votesRouter);
-app.use('/results', resultsRouter);
+app.use('/', indexRouter)
+app.use('/polls', pollsRouter)
+app.use('/votes', votesRouter)
+app.use('/results', resultsRouter)
 
-module.exports = app;
+app.set('port', env.port)
+
+const server = http.createServer(app)
+socket.init(server)
+
+server.listen(env.port)
