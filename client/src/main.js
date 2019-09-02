@@ -18,9 +18,9 @@ Vue.config.productionTip = false
 
 const routes = [
   { path: '/', redirect: '/poll' },
-  { path: '/poll', component: Poll },
-  { path: '/vote/:questionId', component: Vote },
-  { path: '/result/:questionId', component: Result },
+  { path: '/poll', name: 'poll', component: Poll },
+  { path: '/vote/:questionId', name: 'vote', component: Vote },
+  { path: '/result/:questionId', name: 'result', component: Result },
 ]
 
 const router = new VueRouter({

@@ -1,8 +1,38 @@
 import axios from 'axios'
 
-const baseUrl = "http://127.0.0.1:3000";
+const baseUrl = 'http://127.0.0.1:3000'
 
 export default {
+    createPoll(data, callback) {
+        axios
+            .post(`${baseUrl}/polls/`, data)
+            .then(res => {
+                callback(null, res.data)
+            })
+            .catch(error => {
+                callback(error)
+            })
+    },
+    vote(questionId, data, callback) {
+        axios
+            .post(`${baseUrl}/votes/${questionId}`, data)
+            .then(res => {
+                callback(null, res.data)
+            })
+            .catch(error => {
+                callback(error)
+            })
+    },
+    getPoll(questionId, callback) {
+        axios
+            .get(`${baseUrl}/polls/${questionId}`)
+            .then(res => {
+                callback(null, res.data)
+            })
+            .catch(error => {
+                callback(error)
+            })
+    },
     getResult(questionId, callback) {
         axios
             .get(`${baseUrl}/results/${questionId}`)

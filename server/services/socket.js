@@ -7,17 +7,13 @@ module.exports = {
         wss = new WebSocket.Server({ server })
 
         wss.on('connection', ws => {
-            console.log('Websocket connected')
-
             ws.isAlive = true
 
             ws.on('pong', () => {
                 ws.isAlive = true
             })
 
-            ws.on('close', () => {
-                console.log('Websocket disconnected')
-            })
+            ws.on('close', () => {})
         })
 
         // Check for alive conn

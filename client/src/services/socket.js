@@ -14,7 +14,7 @@ export default {
 
             ws.onmessage = event => {
                 const data = JSON.parse(event.data)
-                if (data && data.type == 'vote') handleResult(data)
+                if (data && data.type == 'vote') handleVote(data)
             }
 
             ws.onclose = event => {
@@ -47,7 +47,7 @@ export default {
             ws.send(data)
         }
 
-        function handleResult(data) {
+        function handleVote(data) {
             api.getResult(data.questionId, (err, question) => {
                 if (!err) options.store.dispatch('result/setResult', question)
             })
