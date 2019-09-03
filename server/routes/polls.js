@@ -3,7 +3,7 @@ const router = express.Router();
 const Question = require('../models/question');
 
 router.get('/', (req, res, next) => {
-    Question.find().sort([['_id', -1]]).exec((err, questions) => {
+    Question.find().sort([['_id', -1]]).limit(10).exec((err, questions) => {
         if (err) {
             res.status(400);
             return res.send(err);

@@ -6,7 +6,7 @@
                 <div class="title">
                     {{ answer.text }}
                     <span class="percent">{{ calculatePercent(answer.votes)}}%</span>
-                    <span class="votes">({{ answer.votes }} votes)</span>
+                    <span class="votes"> ({{ answer.votes }} {{ getLabel(answer.votes) }})</span>
                 </div>
                 <div class="bar">
                     <div :style="{width: calculatePercent(answer.votes) + '%'}"></div>
@@ -41,6 +41,9 @@ export default {
     methods: {
         calculatePercent(votes) {
             return parseInt((10000 * votes) / this.question.totalVotes) / 100 || 0
+        },
+        getLabel(votes) {
+            return votes < 2 ? 'vote' : 'votes'
         },
     },
 }
