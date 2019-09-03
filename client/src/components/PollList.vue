@@ -4,7 +4,9 @@
         <div class="poll-view__inner">
             <div v-for="(question, index) in questions" :key="index" class="poll-view__question">
                 <h2>
-                    {{index+1}}. {{ question.text }} <router-link :to="{ name: 'poll-detail', params: { questionId: question._id }}">&#9997;</router-link>
+                    {{index+1}}. {{ question.text }}&nbsp;
+                    <router-link :to="{ name: 'poll-detail', params: { questionId: question._id }}">&#9997;</router-link>&nbsp;
+                    <router-link :to="{ name: 'vote', params: { questionId: question._id }}">&#9993;</router-link>
                 </h2>
                 <input :value="'#poll=' + question._id" type="text" />
             </div>
