@@ -1,6 +1,6 @@
 <template>
     <div class="poll-view">
-        <div class="poll-view__title">New poll</div>
+        <div class="poll-view__title">{{ questionId ? 'Edit poll' : 'New poll' }}</div>
         <div class="poll-view__inner">
             <div class="poll-view__question">
                 <input v-model="question.text" type="text" placeholder="Your Question..." />
@@ -18,7 +18,7 @@
                         v-model="question.answers[index].text"
                         type="text"
                     />
-                    <span class="delete" @click="deleteInput(index)">x</span>
+                    <span class="delete" @click="deleteInput(index)">&#x2717;</span>
                 </div>
             </div>
             <div class="poll-view__options">
@@ -33,19 +33,18 @@
                 </label>
             </div>
             <div class="poll-view__submit">
-                <button @click="createPoll">Create</button>
+                <button
+                    @click="upsertPoll"
+                >{{ questionId ? 'Update' : 'Create' }}</button>
             </div>
             <div
                 class="poll-view__info"
                 :class="{'success' : success === true, 'error' : success === false}"
                 v-if="success !== null"
             >
-                <div v-if="success === true">Created</div>
+                <div v-if="success === true">{{ questionId ? 'Updated' : 'Created' }}</div>
                 <div v-if="success === false">Error</div>
             </div>
-
-            <div v-if="questionId !== null">Just created poll: <router-link :to="{ name: 'vote', params: { questionId }}">{{ questionId }}</router-link></div>
-
         </div>
     </div>
 </template>
@@ -59,11 +58,11 @@ export default {
         return {
             question: {
                 presenterId: 'admin',
-                text: 'How old are you?',
+                text: 'Question text...',
                 answers: [
-                    { text: '10-20' },
-                    { text: '21-30' },
-                    { text: '31-40' },
+                    { text: 'Option 1' },
+                    { text: 'Option 2' },
+                    { text: 'Option 3' },
                     { text: '' },
                 ],
                 multiple: false,
@@ -74,8 +73,15 @@ export default {
         }
     },
     mounted() {
-        if (this.question.answers.length == 0) {
-            this.question.answers.push({ answer: '' })
+        this.questionId = this.$route.params.questionId;
+        if (this.questionId) {
+            api.getPoll(this.questionId, (err, question) => {
+                if (!err) this.question = question;
+            })
+        } else {
+            if (this.question.answers.length == 0) {
+                this.question.answers.push({ answer: '' })
+            }
         }
     },
     methods: {
@@ -89,17 +95,19 @@ export default {
                 this.question.answers.splice(index, 1)
             }
         },
+        upsertPoll() {
+            if (this.questionId) this.updatePoll()
+            else this.createPoll()
+        },
         createPoll() {
             this.validate()
             if (this.isValid) {
-                api.createPoll(this.question, (err, question) => {
+                api.createPoll(this.question, (err) => {
                     if (err) this.alert(false)
                     else {
                         this.alert(true)
-                        this.questionId = question._id
-
                         setTimeout(() => {
-                            this.resetPoll()
+                            this.$router.push({ name: 'poll-list' })
                         }, 1500)
                     }
                 })
@@ -107,14 +115,19 @@ export default {
                 this.alert(false)
             }
         },
-        resetPoll() {
-            this.question.multiple = false
-            this.question.answers = []
-            this.question.answers.push({ answer: '' })
-            this.question.answers.push({ answer: '' })
-            this.question.answers.push({ answer: '' })
-            this.question.text = ''
-            this.isValid = false
+        updatePoll() {
+            this.validate()
+            if (this.isValid) {
+                api.updatePoll(this.questionId, this.question, (err, question) => {
+                    if (err) this.alert(false)
+                    else {
+                        this.alert(true)
+                        this.questionId = question._id
+                    }
+                })
+            } else {
+                this.alert(false)
+            }
         },
         validate() {
             this.question.answers = this.question.answers.filter(

@@ -23,9 +23,29 @@ export default {
                 callback(error)
             })
     },
+    getPolls(callback) {
+        axios
+            .get(`${baseUrl}/polls`)
+            .then(res => {
+                callback(null, res.data)
+            })
+            .catch(error => {
+                callback(error)
+            })
+    },
     getPoll(questionId, callback) {
         axios
             .get(`${baseUrl}/polls/${questionId}`)
+            .then(res => {
+                callback(null, res.data)
+            })
+            .catch(error => {
+                callback(error)
+            })
+    },
+    updatePoll(questionId, data, callback) {
+        axios
+            .put(`${baseUrl}/polls/${questionId}`, data)
             .then(res => {
                 callback(null, res.data)
             })
