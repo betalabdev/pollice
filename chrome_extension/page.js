@@ -11,7 +11,7 @@ function addOverlay(el, id, wait) {
     div.style.top = (bbox.y / svg.viewBox.baseVal.height) * 100 + '%'
     div.style.width = (bbox.width / svg.viewBox.baseVal.width) * 100 + '%'
     div.style.height = (bbox.height / svg.viewBox.baseVal.height) * 100 + '%'
-    div.style.background = 'rgba(253,246,227,.6)' // #fdf6e3"
+    div.style.background = 'rgba(253,246,227,0)' // 100% transparent
     el._overlay_poll = div
     div.id = 'pollice'
 
