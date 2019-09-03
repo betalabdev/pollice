@@ -80,7 +80,9 @@ export default {
             const nrOfVotes = this.question.answers.filter(ans => ans.voted)
                 .length
             if (nrOfVotes > 1) {
-                this.question.answers[index].voted = false
+                this.question.answers = this.question.answers.map((answer, i) =>
+                    Object.assign(answer, { voted: i != index ? false : true })
+                )
             }
         },
         validate() {
