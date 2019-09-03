@@ -1,12 +1,14 @@
 import api from '../services/api'
 
+const baseUrl = "wss://127.0.0.1:3000"
+
 export default {
     install(Vue, options) {
-        let ws = new WebSocket(options.url)
+        let ws = new WebSocket(baseUrl)
         let reconnectInterval = options.reconnectInterval || 1000
 
         Vue.prototype.$wsConnect = (questionId) => {
-            ws = new WebSocket(options.url + "?questionId=" + questionId)
+            ws = new WebSocket(baseUrl + "?questionId=" + questionId)
 
             ws.onopen = () => {
                 reconnectInterval = options.reconnectInterval || 1000

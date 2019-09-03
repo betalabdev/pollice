@@ -3,15 +3,19 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
 const http = require('http')
+const https = require('https')
+const fs = require('fs')
 
 const socket = require('./services/socket')
 const cors = require('./services/cors')
 const env = require('./config/env')
 
-mongoose.connect(env.mongodbUrl, { useNewUrlParser: true })
+mongoose.connect(env.mongodbUrl, {
+  useNewUrlParser: true
+})
 mongoose.connection.on(
-    'error',
-    console.error.bind(console, 'connection error:')
+  'error',
+  console.error.bind(console, 'connection error:')
 )
 
 const indexRouter = require('./routes/index')
@@ -23,7 +27,9 @@ const app = express()
 
 app.use(logger('dev'))
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({
+  extended: false
+}))
 app.use(cookieParser())
 app.use(cors.init())
 
@@ -34,7 +40,15 @@ app.use('/results', resultsRouter)
 
 app.set('port', env.port)
 
-const server = http.createServer(app)
-socket.init(server)
+let server
+if (env.env == "local") {
+  server = https.createServer({
+      key: fs.readFileSync('./certs/server.key'),
+      cert: fs.readFileSync('./certs/server.cert'),
+  }, app)
+} else {
+  server = http.createServer(app)
+}
 
+socket.init(server)
 server.listen(env.port)

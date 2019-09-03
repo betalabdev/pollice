@@ -7,15 +7,13 @@ function addOverlay(el, id, wait) {
     var svg = document.querySelector('.punch-viewer-svgpage-svgcontainer > svg')
 
     div.style.position = 'absolute'
-    // div.style.border = "7px solid #fdf6e3"
-    // div.style.boxSizing = "border-box"
     div.style.left = (bbox.x / svg.viewBox.baseVal.width) * 100 + '%'
     div.style.top = (bbox.y / svg.viewBox.baseVal.height) * 100 + '%'
     div.style.width = (bbox.width / svg.viewBox.baseVal.width) * 100 + '%'
     div.style.height = (bbox.height / svg.viewBox.baseVal.height) * 100 + '%'
     div.style.background = 'rgba(253,246,227,.6)' // #fdf6e3"
     el._overlay_poll = div
-    div.id = 'foobar'
+    div.id = 'pollice'
 
     var added = false
 
@@ -25,7 +23,7 @@ function addOverlay(el, id, wait) {
         }
         top.navigator.keyboard.lock()
         div.innerHTML =
-            '<iframe style="border:0" src="http://127.0.0.1:8080/#/result/' +
+            '<iframe style="border:0" src="https://127.0.0.1:8080/#/result/' +
             id +
             '" width="100%" height="100%"></iframe>'
         if (e) {
@@ -56,7 +54,7 @@ function addOverlay(el, id, wait) {
 
     glob = div
 
-    document.querySelector('.punch-viewer-svgpage').append(div)
+    document.querySelector('.punch-viewer-page-wrapper').append(div)
 }
 
 function scanListener() {
