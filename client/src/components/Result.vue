@@ -16,7 +16,7 @@
         <div v-if="question.openEnded" class="poll-view__results">
             <div class="result" v-for="(response, index) in responses" :key="index">
                 <div class="title">
-                    {{ response.text }}
+                    {{ index + 1 }}. {{ response.text }}
                 </div>
             </div>
         </div>
