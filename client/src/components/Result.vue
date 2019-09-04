@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         calculatePercent(votes) {
-            return parseInt((10000 * votes) / this.question.totalVotes) / 100 || 0
+            return parseInt((10000 * votes) / this.result.totalVotes) / 100 || 0
         },
         getLabel(votes) {
             return votes < 2 ? 'vote' : 'votes'
