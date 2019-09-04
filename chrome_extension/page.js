@@ -54,7 +54,7 @@ function addOverlay(el, id, wait) {
 
     glob = div
 
-    document.querySelector('.punch-viewer-page-wrapper').append(div)
+    document.querySelector('.punch-viewer-svgpage-svgcontainer').append(div)
 }
 
 function scanListener() {
