@@ -22,6 +22,7 @@ const indexRouter = require('./routes/index')
 const pollsRouter = require('./routes/polls')
 const votesRouter = require('./routes/votes')
 const resultsRouter = require('./routes/results')
+const responsesRouter = require('./routes/responses')
 
 const app = express()
 
@@ -37,6 +38,7 @@ app.use('/', indexRouter)
 app.use('/polls', pollsRouter)
 app.use('/votes', votesRouter)
 app.use('/results', resultsRouter)
+app.use('/responses', responsesRouter)
 
 app.set('port', env.port)
 

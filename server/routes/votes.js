@@ -5,7 +5,7 @@ const socket = require('../services/socket')
 const router = express.Router()
 
 router.get('/:questionId', (req, res, next) => {
-    Vote.findOne({ questionId: req.params.questionId }, (err, votes) => {
+    Vote.find({ questionId: req.params.questionId }, (err, votes) => {
         if (err) {
             res.status(400)
             return res.send(err)

@@ -31,6 +31,15 @@
                     />
                     <span class="checkmark"></span>
                 </label>
+                <label class="checkbox">
+                    Is open-ended question
+                    <input
+                        v-model="question.openEnded"
+                        type="checkbox"
+                        checked="checked"
+                    />
+                    <span class="checkmark"></span>
+                </label>
             </div>
             <div class="poll-view__submit">
                 <button
@@ -66,6 +75,7 @@ export default {
                     { text: '' },
                 ],
                 multiple: false,
+                openEnded: false,
             },
             isValid: false,
             success: null,

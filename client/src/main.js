@@ -3,6 +3,7 @@ import App from './App.vue'
 import Poll from './components/Poll'
 import PollList from './components/PollList'
 import Vote from './components/Vote'
+import Response from './components/Response'
 import Result from './components/Result'
 import VueRouter from 'vue-router'
 import VueWebsocket from './services/socket'
@@ -22,6 +23,7 @@ const routes = [
   { path: '/poll', name: 'poll-list', component: PollList },
   { path: '/poll/:questionId', name: 'poll-detail', component: Poll },
   { path: '/vote/:questionId', name: 'vote', component: Vote },
+  { path: '/response/:questionId', name: 'response', component: Response },
   { path: '/result/:questionId', name: 'result', component: Result },
 ]
 

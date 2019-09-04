@@ -23,6 +23,16 @@ export default {
                 callback(error)
             })
     },
+    response(questionId, data, callback) {
+        axios
+            .post(`${baseUrl}/responses/${questionId}`, data)
+            .then(res => {
+                callback(null, res.data)
+            })
+            .catch(error => {
+                callback(error)
+            })
+    },
     getPolls(callback) {
         axios
             .get(`${baseUrl}/polls`)
@@ -71,6 +81,16 @@ export default {
                 )
                 question.totalVotes = totalVotes
                 callback(null, question)
+            })
+            .catch(error => {
+                callback(error)
+            })
+    },
+    getResponses(questionId, callback) {
+        axios
+            .get(`${baseUrl}/responses/${questionId}`)
+            .then(res => {
+                callback(null, res.data)
             })
             .catch(error => {
                 callback(error)

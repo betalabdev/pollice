@@ -10,6 +10,7 @@ const questionSchema = new Schema({
     presenterId: String,
     text:  String,
     multiple: Boolean,
+    openEnded: Boolean,
     answers: [answerSchema],
 });
 
