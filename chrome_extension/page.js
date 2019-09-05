@@ -33,7 +33,7 @@ function addOverlay(el, id, wait) {
 
         var refresh = document.createElement('div')
         refresh.style.position = 'absolute'
-        refresh.style.left = '98%'
+        refresh.style.left = '97%'
         refresh.style.top = '100%'
         refresh.style.width = '15px'
         refresh.style.height = '15px'
@@ -54,7 +54,7 @@ function addOverlay(el, id, wait) {
 
     glob = div
 
-    document.querySelector('.punch-viewer-svgpage-svgcontainer').append(div)
+    el.closest('.punch-viewer-svgpage').append(div)
 }
 
 function scanListener() {
