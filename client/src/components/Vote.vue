@@ -2,37 +2,53 @@
     <div class="poll-view">
         <div class="poll-view__title" v-html="question.text"></div>
         <div v-if="!result" class="poll-view__inner">
-            <div class="poll-view__help">
-                <span v-if="question.multiple">Choose many answers:</span>
-                <span v-else>Choose one answer:</span>
-            </div>
-            <div class="poll-view__votes">
-                <div v-for="(answer, index) in question.answers" :key="answer._id" class="answer">
-                    <label class="checkbox">
-                        {{ answer.text }}
-                        <input
-                            type="checkbox"
-                            v-model="question.answers[index].voted"
-                            @change="multipleCheck(index)"
-                        />
-                        <span class="checkmark"></span>
-                    </label>
+            <div v-if="!question.openEnded">
+                <div class="poll-view__help">
+                    <span v-if="question.multiple">Choose many answers:</span>
+                    <span v-else>Choose one answer:</span>
+                </div>
+                <div class="poll-view__votes">
+                    <div v-for="(answer, index) in question.answers" :key="answer._id" class="answer">
+                        <label class="checkbox">
+                            {{ answer.text }}
+                            <input
+                                type="checkbox"
+                                v-model="question.answers[index].voted"
+                                @change="multipleCheck(index)"
+                            />
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="poll-view__submit">
+                    <button @click="vote">Vote</button>
                 </div>
             </div>
-            <div class="poll-view__submit">
-                <button @click="vote">Vote</button>
+
+            <div v-if="question.openEnded">
+                <div class="poll-view__help">
+                    <span>Draft your response:</span>
+                </div>
+                <div class="poll-view__votes">
+                    <input type="text" v-model="response" />
+                </div>
+                <div class="poll-view__submit">
+                    <button @click="submit">Submit</button>
+                </div>
             </div>
+
             <div
                 class="poll-view__info"
                 :class="{'success' : success === true, 'error' : success === false}"
                 v-if="success !== null"
             >
-                <div v-if="success === true">Voted</div>
+                <div v-if="success === true">{{ question.openEnded ? 'Submitted' : 'Voted' }}</div>
                 <div v-if="success === false">Error</div>
             </div>
         </div>
 
-        <div v-if="result" class="poll-view__results">Thank you for voting!</div>
+
+        <div v-if="result" class="poll-view__results">Thank you for your {{ question.openEnded ? 'response' : 'vote' }}!</div>
     </div>
 </template>
 
@@ -45,6 +61,7 @@ export default {
         return {
             question: {},
             questionId: null,
+            response: "",
             result: false,
             success: null,
             isValid: false,
@@ -58,13 +75,32 @@ export default {
     },
     methods: {
         vote() {
-            this.validate()
+            this.validateVote()
             if (this.isValid) {
                 api.vote(
                     this.questionId,
                     {
                         userId: 'User 1',
                         answerIds: this.votes,
+                    },
+                    err => {
+                        if (err) this.alert(false)
+                        else this.alert(true)
+                    }
+                )
+            } else {
+                this.alert(false)
+            }
+        },
+        submit() {
+            this.validateResponse()
+            if (this.isValid) {
+                api.response(
+                    this.questionId,
+                    {
+                        userId: 'User 1',
+                        questionId: this.questionId,
+                        text: this.response,
                     },
                     err => {
                         if (err) this.alert(false)
@@ -85,7 +121,7 @@ export default {
                 )
             }
         },
-        validate() {
+        validateVote() {
             this.votes = this.question.answers
                 .filter(answer => answer.voted)
                 .map(answer => answer._id)
@@ -99,6 +135,13 @@ export default {
                 } else {
                     this.isValid = true
                 }
+            } else {
+                this.isValid = false
+            }
+        },
+        validateResponse() {
+            if (this.response) {
+                this.isValid = true
             } else {
                 this.isValid = false
             }
