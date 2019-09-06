@@ -27,11 +27,11 @@
                         <input v-model="question.multiple" id="multiple" type="checkbox" class="invisible">
                         <div class="checkbox">
                             <svg width="48" height="48" viewBox="0 0 48 48">
-                                <circle cx="24" cy="24" r="11" stroke="#C8CCD4" stroke-width="2" fill="#ffffff"></circle>
+                                <circle cx="24" cy="24" r="11"></circle>
                                 <polyline points="19 26 24 29 29 18"></polyline>
                             </svg>
                         </div>
-                        <span>Allow multiple votes</span>
+                        <span class="checkbox-title">Allow multiple votes</span>
                     </label>
                 </div>
 
@@ -40,11 +40,11 @@
                         <input v-model="question.openEnded" id="openEnded" type="checkbox" class="invisible">
                         <div class="checkbox">
                             <svg width="48" height="48" viewBox="0 0 48 48">
-                                <circle cx="24" cy="24" r="11" stroke="#C8CCD4" stroke-width="2" fill="#ffffff"></circle>
+                                <circle cx="24" cy="24" r="11"></circle>
                                 <polyline points="19 26 24 29 29 18"></polyline>
                             </svg>
                         </div>
-                        <span>Is open-ended question</span>
+                        <span class="checkbox-title">Is open-ended question</span>
                     </label>
                 </div>
             </div>
