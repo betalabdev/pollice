@@ -9,6 +9,7 @@
 body {
     margin: auto;
     font-size: 16px;
+    box-sizing: border-box;
     background: #e0e1ea;
     font-family: roboto_condensedregular, Arial, Helvetica, sans-serif;
 }
@@ -17,6 +18,7 @@ body {
     margin: 3rem auto;
     padding: 0 2rem;
     max-width: 500px;
+    border-radius: 2rem;
     background-color: #ffffff;
     position: relative;
     transition: all 0.2s ease-in-out;
@@ -28,8 +30,7 @@ body {
         background-color: #eff3ff;
     }
     &__title {
-        color: #fc942b;
-        text-shadow: 1px 1px #eff3ff;
+        color: #eff3ff;
         text-align: center;
         font-size: 32px;
         font-weight: 500;
@@ -179,7 +180,7 @@ body {
         font-size: 14px;
         opacity: 0.6;
         a {
-            color: #1b98cf;
+            color: #1d4dca;
             text-decoration: none;
         }
     }
@@ -189,11 +190,32 @@ body {
         display: flex;
         input {
             &:checked + .checkbox {
-                border-color: #20C2E0;
+                border-color: #335ecf;
             }
             &:checked + .checkbox svg circle {
-                fill: #20C2E0;
-                stroke: #20C2E0;
+                fill: #335ecf;
+            }
+            &:checked + .checkbox svg polyline {
+                stroke-dashoffset: 0;
+            }
+        }
+        .checkbox {
+            svg {
+                circle {
+                    stroke: #335ecf;
+                    stroke-width: 2;
+                    fill: none;
+                    stroke-dasharray: 1000;
+                    stroke-dashoffset: 1000;
+                    transition: all 1s ease-in-out;
+                }
+            }
+        }
+        &:hover {
+            .checkbox {
+                circle {
+                    stroke-dashoffset: 0;
+                }
             }
             &:checked + .checkbox svg polyline {
                 stroke-dashoffset: 0;
@@ -207,24 +229,15 @@ body {
             top: 2px;
             float: left;
             margin-right: 8px;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #C8CCD4;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
+            border: 2px solid #C8CCD4;
+            box-sizing: border-box;
             svg {
                 position: absolute;
                 top: -14px;
                 left: -14px;
-                path {
-                    fill: none;
-                    stroke: #20C2E0;
-                    stroke-width: 2;
-                    stroke-linecap: round;
-                    stroke-linejoin: round;
-                    stroke-dasharray: 71px;
-                    stroke-dashoffset: 71px;
-                    transition: all 0.6s ease;
-                }
                 polyline {
                     fill: none;
                     stroke: #FFF;
@@ -239,6 +252,7 @@ body {
         }
         span {
             margin-top: .3rem;
+            color: #8e96ad;
         }
     }
 
@@ -287,10 +301,10 @@ body {
 }
 .btn-save {
     background-color: rgba(#335ecf, .5);
-    color: rgba(#ffffff, .5);
+    color: rgba(#eff3ff, .5);
     &:hover {
         background-color: #335ecf;
-        color: #ffffff;
+        color: #eff3ff;
         -webkit-transition: background-color 300ms linear;
         -ms-transition: background-color 300ms linear;
         transition: background-color 300ms linear;
