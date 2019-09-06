@@ -16,6 +16,7 @@ function addOverlay(el, id, wait) {
     div.id = 'pollice'
 
     var added = false
+    var showQr = false
 
     function addIframe(e) {
         if (added) {
@@ -23,8 +24,7 @@ function addOverlay(el, id, wait) {
         }
         top.navigator.keyboard.lock()
         div.innerHTML =
-            '<iframe style="border:0" src="https://127.0.0.1:8080/#/result/' +
-            id +
+            '<iframe style="border:0" src="https://127.0.0.1:8080/#' + (showQr ? '/qr/' : '/result/') + id +
             '" width="100%" height="100%"></iframe>'
         if (e) {
             e.stopPropagation()
@@ -42,8 +42,25 @@ function addOverlay(el, id, wait) {
 
         refresh.addEventListener('mousedown', function() {
             added = false
+            showQr = false
             addIframe()
         })
+
+        var qr = document.createElement('div')
+        qr.style.position = 'absolute'
+        qr.style.left = '95%'
+        qr.style.top = '100%'
+        qr.style.width = '15px'
+        qr.style.height = '15px'
+        qr.style.background = 'rgba(0, 0, 0, .1)'
+        div.appendChild(qr)
+
+        qr.addEventListener('mousedown', function() {
+            added = false
+            showQr = true
+            addIframe()
+        })
+
     }
 
     if (wait) {
