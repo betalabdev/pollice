@@ -9,22 +9,13 @@ services:
             - '27017:27017'
 
     client:
-        build:
-            context: ./client/
-        image: client
+        image: 925731155295.dkr.ecr.ap-southeast-1.amazonaws.com/pollice-app:latest
         restart: always
-        environment:
-            - NODE_ENV=$NODE_ENV
-            - CLIENT_URL=$CLIENT_URL
-            - SERVER_URL=$SERVER_URL
-            - CLIENT_ID=$CLIENT_ID
         ports:
             - '8080:80'
 
     server:
-        build:
-            context: ./server/
-        image: server
+        image: 925731155295.dkr.ecr.ap-southeast-1.amazonaws.com/pollice-api:latest
         restart: always
         depends_on:
             - mongo
