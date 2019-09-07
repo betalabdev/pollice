@@ -38,7 +38,7 @@ const getVoteForm = (baseUrl, question) => ({
     },
 })
 
-const getWaitForm = (baseUrl) => ({
+const getWaitForm = (baseUrl, question) => ({
     data: {
         metadata: {
             app_name: 'Pollice',

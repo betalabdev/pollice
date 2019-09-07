@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.get('/:questionId', (req, res, next) => {
     const questionId = req.params.questionId
-    Question.findById(queOneonId, (err, question) => {
+    Question.findById(questionId, (err, question) => {
         if (err) {
             res.status(400)
             return res.send(err)
