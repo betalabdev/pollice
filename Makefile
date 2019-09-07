@@ -1,7 +1,7 @@
-all: build run rmi
+all: pull run rmi
 
-build:
-	docker-compose build client server
+pull:
+	docker-compose pull
 
 up:
 	. ./.env && docker-compose up

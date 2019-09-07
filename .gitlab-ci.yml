@@ -1,0 +1,60 @@
+image: docker:latest
+
+variables:
+  CLIENT_REPO_URL: 925731155295.dkr.ecr.ap-southeast-1.amazonaws.com/pollice-app
+  SERVER_REPO_URL: 925731155295.dkr.ecr.ap-southeast-1.amazonaws.com/pollice-api
+  REGION: ap-southeast-1
+
+services:
+  - docker:dind
+
+before_script:
+  - apk add --no-cache python py-pip
+  - pip install awscli
+  - $(aws ecr get-login --no-include-email --region "${REGION}")
+  - IMAGE_TAG="$(echo $CI_COMMIT_SHA | head -c 8)"
+
+stages:
+  - build
+  - deploy
+
+build app:
+  stage: build
+  script:
+    - echo "Building client image..."
+    - docker build --build-arg SERVER_URL=$SERVER_URL --build-arg CLIENT_URL=$CLIENT_URL --build-arg CLIENT_ID=$CLIENT_ID -t $CLIENT_REPO_URL:latest ./client
+    - echo "Tagging image..."
+    - docker tag $CLIENT_REPO_URL:latest $CLIENT_REPO_URL:$IMAGE_TAG
+    - echo "Pushing image..."
+    - docker push $CLIENT_REPO_URL:latest
+    - docker push $CLIENT_REPO_URL:$IMAGE_TAG
+  only:
+    - master
+
+build api:
+  stage: build
+  script:
+    - echo "Building server image..."
+    - docker build -t $SERVER_REPO_URL:latest ./server
+    - echo "Tagging image..."
+    - docker tag $SERVER_REPO_URL:latest $SERVER_REPO_URL:$IMAGE_TAG
+    - echo "Pushing image..."
+    - docker push $SERVER_REPO_URL:latest
+    - docker push $SERVER_REPO_URL:$IMAGE_TAG
+  only:
+    - master
+
+deploy production:
+    image: centos:7
+    stage: deploy
+    before_script:
+      - yum install which -y
+      - 'which ssh-agent || ( yum install openssh-clients -y )'
+      - eval $(ssh-agent -s)
+    script:
+      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+      - mkdir -p ~/.ssh
+      - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+      - ssh -t ubuntu@poll.betalab.dev "cd pollice && git pull && git checkout -f && make"
+    only:
+      - master
