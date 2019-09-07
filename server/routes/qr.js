@@ -13,7 +13,7 @@ router.get('/:questionId', (req, res, next) => {
             res.status(400)
             return res.send(err)
         }
-        res.send(form.getVoteForm(env.baseUrl, question))
+        res.send(form.getVoteForm(env.serverUrl, question))
     })
 })
 

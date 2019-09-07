@@ -1,6 +1,7 @@
 import axios from 'axios'
+import env from '../config/env'
 
-const baseUrl = 'https://127.0.0.1:3000'
+const baseUrl = env.serverUrl;
 
 export default {
     createPoll(data, callback) {

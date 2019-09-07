@@ -1,6 +1,7 @@
 import api from '../services/api'
+import env from '../config/env'
 
-const baseUrl = "wss://127.0.0.1:3000"
+const baseUrl = env.serverUrl.replace("http", "ws")
 
 export default {
     install(Vue, options) {
