@@ -40,11 +40,10 @@ build api:
     - master
 
 deploy production:
-    image: centos:7
+    image: ubuntu
     stage: deploy
     before_script:
-      - yum install which -y
-      - 'which ssh-agent || ( yum install openssh-clients -y )'
+      - 'which ssh-agent || (sudo apt install openssh-clients -y)'
       - eval $(ssh-agent -s)
     script:
       - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
