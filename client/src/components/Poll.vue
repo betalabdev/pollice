@@ -74,7 +74,6 @@
         data() {
             return {
                 question: {
-                    presenterId: 'admin',
                     text: 'Question text...',
                     answers: [
                         {text: 'Option 1'},

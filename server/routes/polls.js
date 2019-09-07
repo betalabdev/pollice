@@ -1,25 +1,42 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const env = require('../config/env')
 const Question = require('../models/question');
 
 router.get('/', (req, res, next) => {
-    Question.find().sort([['_id', -1]]).limit(10).exec((err, questions) => {
+    token = req.headers['authorization']
+    jwt.verify(token, env.jwtSeed, (err, googleId) => {
         if (err) {
-            res.status(400);
+            res.status(401);
             return res.send(err);
         }
-        res.send(questions);
+        Question.find({presenterId: googleId}).sort([['_id', -1]]).limit(10).exec((err, questions) => {
+            if (err) {
+                res.status(400);
+                return res.send(err);
+            }
+            res.send(questions);
+        })
     })
 });
 
 router.post('/', (req, res, next) => {
-    const question = new Question(req.body);
-    question.save((err, question) => {
+    token = req.headers['authorization']
+    jwt.verify(token, env.jwtSeed, (err, googleId) => {
         if (err) {
-            res.status(400);
+            res.status(401);
             return res.send(err);
         }
-        res.send(question);
+        req.body['presenterId'] = googleId
+        const question = new Question(req.body);
+        question.save((err, question) => {
+            if (err) {
+                res.status(400);
+                return res.send(err);
+            }
+            res.send(question);
+        })
     })
 });
 
