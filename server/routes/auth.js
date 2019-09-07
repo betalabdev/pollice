@@ -14,7 +14,7 @@ router.post('/', (req, res, next) => {
     async function verify(req, res, next) {
         const ticket = await client.verifyIdToken({
             idToken: tokenId,
-            audience: env.secretKey,
+            audience: env.clientId,
         });
         const payload = ticket.getPayload();
         const userId = payload['sub'];

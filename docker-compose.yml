@@ -1,39 +1,36 @@
 version: '2.1'
 services:
     mongo:
-      image: mongo:4.2.0-bionic
-      restart: always
-      volumes:
-        - ./data/mongo:/data/db
-      ports:
-        - "27017:27017"
+        image: mongo:4.2.0-bionic
+        restart: always
+        volumes:
+            - ./data/mongo:/data/db
+        ports:
+            - '27017:27017'
 
     client:
-      build:
-        context: ./client/
-      image: client
-      restart: always
-      environment:
-        - DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-        - DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres/$POSTGRES_DB
-        - SECRET_KEY=$SECRET_KEY
-      volumes:
-        - ./data/media:/code/laban/media
-        - ./data/public:/code/laban/public
-      ports:
-        - "8080:8080"
-  
+        build:
+            context: ./client/
+        image: client
+        restart: always
+        environment:
+            - NODE_ENV=$NODE_ENV
+            - CLIENT_URL=$CLIENT_URL
+            - SERVER_URL=$SERVER_URL
+            - CLIENT_ID=$CLIENT_ID
+        ports:
+            - '8080:8080'
+
     server:
-      build:
-        context: ./server/
-      image: server
-      restart: always
-      environment:
-        - DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-        - DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres/$POSTGRES_DB
-        - SECRET_KEY=$SECRET_KEY
-      volumes:
-        - ./data/media:/code/laban/media
-        - ./data/public:/code/laban/public
-      ports:
-        - "3000:3000"
+        build:
+            context: ./server/
+        image: server
+        restart: always
+        environment:
+            - NODE_ENV=$NODE_ENV
+            - CLIENT_URL=$CLIENT_URL
+            - SERVER_URL=$SERVER_URL
+            - CLIENT_ID=$CLIENT_ID
+            - MONGODB_URL=mongodb://mongo:27017/pollice
+        ports:
+            - '3000:3000'
