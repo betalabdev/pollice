@@ -5,7 +5,7 @@ let wss
 
 module.exports = {
     init(server) {
-        wss = new WebSocket.Server({ server })
+        wss = new WebSocket.Server({ server, path: "/socket" })
 
         wss.on('connection', (ws, req) => {
             const parameters = url.parse(req.url, true)

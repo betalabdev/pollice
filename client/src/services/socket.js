@@ -1,7 +1,7 @@
 import api from '../services/api'
 import env from '../config/env'
 
-const baseUrl = env.serverUrl.replace("http", "ws")
+const baseUrl = env.serverUrl.replace("http", "ws") + "/socket"
 
 export default {
     install(Vue, options) {
