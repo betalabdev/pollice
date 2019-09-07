@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 @font-face {
     font-family: 'roboto_condensedregular';
     src: url('/fonts/robotocondensed-regular-webfont.woff2') format('woff2'),
@@ -6,20 +8,26 @@
     font-style: normal;
 }
 
+html {
+    min-height: 100%;
+}
 body {
     margin: auto;
     font-size: 16px;
+    min-height: 100%;
     box-sizing: border-box;
     background: #e0e1ea;
     font-family: roboto_condensedregular, Arial, Helvetica, sans-serif;
 }
 
+#app {
+    min-height: 100%;
+}
+
 .poll-view {
-    margin: 3rem auto;
-    padding: 0 2rem;
-    max-width: 500px;
-    border-radius: 2rem;
-    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+    background-color: $white-primary;
     position: relative;
     transition: all 0.2s ease-in-out;
     .poll-input {
@@ -34,19 +42,12 @@ body {
         text-align: center;
         font-size: 32px;
         font-weight: 500;
-        padding: 1rem 2rem;
-        font-family: cursive;
-        margin-bottom: 5rem;
-        background-color: rgba(29, 77, 202, 0.9);
-        border-bottom-left-radius: 5rem;
-        border-bottom-right-radius: 5rem;
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+        background-color: rgba($poll-primary, .9);
     }
     &__inner {
         padding: 16px;
-    }
-    &__help {
-        font-size: 22px;
-        padding-bottom: 20px;
     }
     &__question {
         padding-bottom: 3rem;
@@ -67,17 +68,17 @@ body {
             padding-bottom: 5px;
             display: block;
             position: relative;
-            background-color: #fff;
+            background-color: $white-primary;
         }
     }
-    &__answers {
-        .answer {
+    &__answers, &__inner, &__help {
+        .answer, .poll-view__code, .poll-view__votes {
             animation-name: popup;
             animation-duration: 1s;
             margin-bottom: 1rem;
             display: block;
             position: relative;
-            background-color: #fff;
+            background-color: $white-primary;
             .delete {
                 top: 14%;
                 right: 1%;
@@ -87,7 +88,7 @@ body {
                 border-radius: 50%;
                 padding: .15rem .45rem;
                 &:hover {
-                    cursor: pointer;
+                    @extend .cursor-pointer;
                     color: #ff6f61;
                 }
             }
@@ -147,6 +148,7 @@ body {
         z-index: 999;
         animation-name: shownhide;
         animation-duration: 3s;
+        font-family: cursive;
         &.success {
             background-color: lighten($poll-primary, 20%);
             div {
@@ -163,14 +165,16 @@ body {
             position: absolute;
             left: 50%;
             top: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             transform: translate(-50%, -50%);
             text-align: center;
-            background-color: #fff;
+            background-color: $white-primary;
             border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            font-size: 24px;
-            line-height: 100px;
+            width: 140px;
+            height: 140px;
+            font-size: 1.5rem;
         }
     }
     &__footer {
@@ -186,14 +190,14 @@ body {
     }
     .label-cbx {
         user-select: none;
-        cursor: pointer;
+        @extend .cursor-pointer;
         display: flex;
         input {
             &:checked + .checkbox {
-                border-color: #335ecf;
+                border-color: $poll-primary;
             }
             &:checked + .checkbox svg circle {
-                fill: #335ecf;
+                fill: $poll-primary;
             }
             &:checked + .checkbox svg polyline {
                 stroke-dashoffset: 0;
@@ -202,7 +206,7 @@ body {
         .checkbox {
             svg {
                 circle {
-                    stroke: #335ecf;
+                    stroke: $poll-primary;
                     stroke-width: 2;
                     fill: none;
                     stroke-dasharray: 1000;
@@ -232,7 +236,7 @@ body {
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            border: 2px solid #C8CCD4;
+            border: 2px solid $gray-primary;
             box-sizing: border-box;
             svg {
                 position: absolute;
@@ -269,26 +273,27 @@ body {
         height: 0;
         opacity: 0;
     }
+}
 
-    &__code {
-        padding-bottom: 30px;
-        //input {
-        //    opacity: 0.6;
-        //    box-sizing: border-box;
-        //    background-color: transparent;
-        //    width: 100%;
-        //    color: #333;
-        //    border: 2px solid #4e4c4b8f;
-        //    border-radius: 0px;
-        //    padding: 5px 40px 5px 10px;
-        //    line-height: 20px;
-        //    font-size: 20px;
-        //    transition: border 0.2s ease-in-out;
-        //    &:focus {
-        //        outline: none;
-        //        border: 2px solid darken($poll-primary, 10%);
-        //    }
-        //}
+.question-title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    .question-index {
+        padding: .5rem .75rem;
+        background-color: rgba($poll-primary, .9);
+        border-radius: 50%;
+        color: $white-primary;
+    }
+    .question-text {
+        display: inline-block;
+        text-transform: capitalize;
+        font-weight: 600;
+        color: $poll-primary;
+    }
+    .icon-voting, .icon-edit {
+        width: 25px;
+        @extend .cursor-pointer;
     }
 }
 
@@ -296,19 +301,106 @@ body {
     padding: .75rem 4rem;
     border-radius: 2rem;
     font-size: 1.2rem;
+    font-weight: 600;
     border: none;
-    cursor: pointer;
-}
-.btn-save {
-    background-color: rgba(#335ecf, .5);
+    @extend .cursor-pointer;
     color: rgba(#eff3ff, .5);
     &:hover {
-        background-color: #335ecf;
         color: #eff3ff;
-        -webkit-transition: background-color 300ms linear;
-        -ms-transition: background-color 300ms linear;
-        transition: background-color 300ms linear;
     }
+}
+
+.btn-save {
+    color: #eff3ff;
+    transition: 0.5s;
+    background-color: $poll-primary;
+    //background-image: linear-gradient(to right, #335ecf 0%, #26a0da 51%, #335ecf 100%);
+
+    &:hover {
+        color: #FFC107;
+    }
+}
+
+.px-20-pc {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.text-back {
+    position: absolute;
+    top: 23%;
+    left: 29%;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: $gray-primary;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.input-has-copy {
+    position: relative;
+    .icon-copy {
+        position: absolute;
+        width: 25px;
+        top: 13%;
+        right: 2%;
+        @extend .cursor-pointer;
+    }
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.thank-voting {
+    text-align: center;
+    font-size: 2rem;
+    padding: 6rem;
+    font-family: cursive;
+}
+
+$class-margin-bottom: mb !default;
+$class-margin-left-right: mx !default;
+$class-margin-top-bottom: my !default;
+$class-padding-left-right: px !default;
+$class-padding-top-bottom: py !default;
+$class-padding-bottom: pb !default;
+
+@for $i from 1 through 8 {
+    .#{$class-margin-bottom}-#{$i} {
+        margin-bottom: $i * .25rem !important;
+    }
+    .#{$class-margin-left-right}-#{$i} {
+        margin-left: $i * .25rem !important;
+        margin-right: $i * .25rem !important;
+    }
+    .#{$class-padding-top-bottom}-#{$i} {
+        padding-top: $i * .25rem !important;
+        padding-bottom: $i * .25rem !important;
+    }
+    .#{$class-padding-bottom}-#{$i} {
+        padding-bottom: $i * .25rem !important;
+    }
+    .#{$class-margin-top-bottom}-#{$i} {
+        margin-top: $i * .25rem !important;
+        margin-bottom: $i * .25rem !important;
+    }
+}
+
+@keyframes arrow {
+    0% {left: 14%}
+    50% {left: 11%}
+    100% {left: 14%}
 }
 
 @keyframes popup {
