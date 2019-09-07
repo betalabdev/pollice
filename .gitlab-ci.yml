@@ -43,7 +43,7 @@ deploy production:
     image: ubuntu
     stage: deploy
     before_script:
-      - 'which ssh-agent || (sudo apt install openssh-clients -y)'
+      - 'which ssh-agent || (apt-get install openssh-client -y)'
       - eval $(ssh-agent -s)
     script:
       - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
