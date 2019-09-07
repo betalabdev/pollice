@@ -19,18 +19,21 @@ services:
             - SERVER_URL=$SERVER_URL
             - CLIENT_ID=$CLIENT_ID
         ports:
-            - '8080:8080'
+            - '8080:80'
 
     server:
         build:
             context: ./server/
         image: server
         restart: always
+        depends_on:
+            - mongo
         environment:
             - NODE_ENV=$NODE_ENV
             - CLIENT_URL=$CLIENT_URL
             - SERVER_URL=$SERVER_URL
             - CLIENT_ID=$CLIENT_ID
             - MONGODB_URL=mongodb://mongo:27017/pollice
+            - WAIT_HOSTS=mongo:27017
         ports:
             - '3000:3000'
