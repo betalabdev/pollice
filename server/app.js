@@ -1,5 +1,4 @@
 const express = require('express')
-const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
 const http = require('http')
@@ -33,7 +32,6 @@ app.use(express.json())
 app.use(express.urlencoded({
   extended: false
 }))
-app.use(cookieParser())
 app.use(cors.init())
 
 app.use('/', indexRouter)
