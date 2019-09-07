@@ -1,10 +1,5 @@
 image: docker:latest
 
-variables:
-  CLIENT_REPO_URL: 925731155295.dkr.ecr.ap-southeast-1.amazonaws.com/pollice-app
-  SERVER_REPO_URL: 925731155295.dkr.ecr.ap-southeast-1.amazonaws.com/pollice-api
-  REGION: ap-southeast-1
-
 services:
   - docker:dind
 
@@ -55,6 +50,6 @@ deploy production:
       - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
       - mkdir -p ~/.ssh
       - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-      - ssh -t ubuntu@poll.betalab.dev "cd pollice && git pull && git checkout -f && make"
+      - ssh -t ubuntu@$SERVER_IP "cd pollice && git pull && git checkout -f && make"
     only:
       - master
