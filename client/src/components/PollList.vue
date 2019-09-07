@@ -2,22 +2,26 @@
     <div class="poll-view">
         <div class="poll-view__title">Poll list</div>
         <div class="poll-view__inner">
-            <div v-for="(question, index) in questions" :key="index" class="poll-view__code">
-                <h2>
-                    {{index+1}}. {{ question.text }}&nbsp;
-                    <router-link
-                            :to="{ name: 'poll-detail', params: { questionId: question._id }}"
-                    >&#9997;
+            <div v-for="(question, index) in questions" :key="index" class="poll-view__code px-20-pc mb-4">
+                <div class="question-title mb-2 py-2">
+                    <span class="question-index">{{index+1}}</span>
+                    <span class="question-text mx-4">{{ question.text }}</span>
+                    <router-link :to="{ name: 'poll-detail', params: { questionId: question._id }}">
+                        <img class="icon-edit" src="../assets/icon-edit.png" alt="">
                     </router-link>&nbsp;
-                    <router-link :to="{ name: 'vote', params: { questionId: question._id }}">&#9995;</router-link>
-                </h2>
-                <input :id="question._id" :value="'#poll=' + question._id" type="text"/>
-                <button @click="copy(question._id)">Copy code</button>
+                    <router-link :to="{ name: 'vote', params: { questionId: question._id }}">
+                        <img class="icon-voting" src="../assets/icon-voting.png" alt="">
+                    </router-link>
+                </div>
+                <div class="input-has-copy">
+                    <input class="poll-input mb-2" :id="question._id" :value="'#poll=' + question._id" type="text"/>
+                    <img class="icon-copy" src="../assets/icon-copy.png" alt="" @click="copy(question._id)">
+                </div>
             </div>
         </div>
         <div class="poll-view__submit">
             <router-link :to="{ name: 'poll-new' }">
-                <button>New</button>
+                <button class="btn btn-save">New</button>
             </router-link>
         </div>
     </div>

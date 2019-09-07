@@ -1,5 +1,7 @@
 <template>
-    <qrcode :value="qrUrl" :options="{ width: 500 }"></qrcode>
+    <div class="poll-view text-center">
+        <qrcode :value="qrUrl" :options="{ width: 500 }"></qrcode>
+    </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 var glob
-//var baseUrl = 'https://localhost:8080/#'
+// var baseUrl = 'https://localhost:8080/#'
 var baseUrl = 'https://poll.betalab.dev/#'
 
 function addOverlay(el, id, wait) {
@@ -34,12 +34,24 @@ function addOverlay(el, id, wait) {
         added = true
 
         var refresh = document.createElement('div')
+        refresh.innerHTML = '&#9851'
+        refresh.style.display = 'flex'
+        refresh.style.color = '#335ecf'
+        refresh.style.cursor = 'pointer'
         refresh.style.position = 'absolute'
-        refresh.style.left = '97%'
-        refresh.style.top = '100%'
-        refresh.style.width = '15px'
-        refresh.style.height = '15px'
-        refresh.style.background = 'rgba(0, 0, 0, .1)'
+        refresh.style.left = '100%'
+        refresh.style.top = '0'
+        refresh.style.width = '3rem'
+        refresh.style.height = '3rem'
+        refresh.style['font-size'] = '1rem'
+        refresh.style['align-items'] = 'center'
+        refresh.style['font-weight'] = '600'
+        refresh.style['justify-content'] = 'center'
+        refresh.style['border-right'] = '2px solid #335ecf'
+        refresh.style['border-top'] = '2px solid #335ecf'
+        refresh.style['border-bottom'] = '2px solid #335ecf'
+        refresh.style['box-shadow'] = '2px 3px 4px -2px'
+
         div.appendChild(refresh)
 
         refresh.addEventListener('mousedown', function() {
@@ -49,12 +61,23 @@ function addOverlay(el, id, wait) {
         })
 
         var qr = document.createElement('div')
+        qr.innerHTML = '&#9974;'
+        qr.style.display = 'flex'
+        qr.style.color = '#335ecf'
+        qr.style.cursor = 'pointer'
         qr.style.position = 'absolute'
-        qr.style.left = '95%'
-        qr.style.top = '100%'
-        qr.style.width = '15px'
-        qr.style.height = '15px'
-        qr.style.background = 'rgba(0, 0, 0, .1)'
+        qr.style.left = '100%'
+        qr.style.top = '4rem'
+        qr.style.width = '3rem'
+        qr.style.height = '3rem'
+        qr.style['font-size'] = '1rem'
+        qr.style['align-items'] = 'center'
+        qr.style['justify-content'] = 'center'
+        qr.style['font-weight'] = '600'
+        qr.style['border-right'] = '2px solid #335ecf'
+        qr.style['border-top'] = '2px solid #335ecf'
+        qr.style['border-bottom'] = '2px solid #335ecf'
+        qr.style['box-shadow'] = '2px 3px 4px -2px'
         div.appendChild(qr)
 
         qr.addEventListener('mousedown', function() {

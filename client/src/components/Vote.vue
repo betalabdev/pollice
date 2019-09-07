@@ -2,38 +2,41 @@
     <div class="poll-view">
         <div class="poll-view__title" v-html="question.text"></div>
         <div v-if="!result" class="poll-view__inner">
-            <div v-if="!question.openEnded">
+            <div class="px-20-pc" v-if="!question.openEnded">
                 <div class="poll-view__help">
-                    <span v-if="question.multiple">Choose many answers:</span>
-                    <span v-else>Choose one answer:</span>
+                    <div class="question-title mb-2 py-2">
+                        <span class="question-text" v-if="question.multiple">Choose many answers:</span>
+                        <span class="question-text" v-else>Choose one answer:</span>
+                    </div>
                 </div>
-                <div class="poll-view__votes">
-                    <div v-for="(answer, index) in question.answers" :key="answer._id" class="answer">
-                        <label class="checkbox">
-                            {{ answer.text }}
-                            <input
-                                type="checkbox"
-                                v-model="question.answers[index].voted"
-                                @change="multipleCheck(index)"
-                            />
-                            <span class="checkmark"></span>
+                <div class="poll-view__votes mb-4">
+                    <div class="custom-checkbox" v-for="(answer, index) in question.answers" :key="answer._id">
+                        <label :for="[index+1]" class="label-cbx">
+                            <input v-model="question.answers[index].voted" @change="multipleCheck(index)" type="checkbox" :id="[index+1]" class="invisible">
+                            <div class="checkbox">
+                                <svg width="48" height="48" viewBox="0 0 48 48">
+                                    <circle cx="24" cy="24" r="11"></circle>
+                                    <polyline points="19 26 24 29 29 18"></polyline>
+                                </svg>
+                            </div>
+                            <span class="checkbox-title">{{ answer.text }}</span>
                         </label>
                     </div>
                 </div>
                 <div class="poll-view__submit">
-                    <button @click="vote">Vote</button>
+                    <button class="btn btn-save" @click="vote">Vote</button>
                 </div>
             </div>
 
-            <div v-if="question.openEnded">
-                <div class="poll-view__help">
-                    <span>Draft your response:</span>
+            <div class="px-20-pc" v-if="question.openEnded">
+                <div class="poll-view__help question-title mb-4">
+                    <span class="question-text">Draft your response:</span>
                 </div>
                 <div class="poll-view__votes">
-                    <input type="text" v-model="response" />
+                    <input type="text" class="poll-input" v-model="response" />
                 </div>
                 <div class="poll-view__submit">
-                    <button @click="submit">Submit</button>
+                    <button class="btn btn-save" @click="submit">Submit</button>
                 </div>
             </div>
 
@@ -48,7 +51,17 @@
         </div>
 
 
-        <div v-if="result" class="poll-view__results">Thank you for your {{ question.openEnded ? 'response' : 'vote' }}!</div>
+        <div v-if="result">
+            <div class="thank-voting">Thank you for your {{ question.openEnded ? 'response' : 'vote' }}!</div>
+        </div>
+        <!--<div class="position-relative py-4">-->
+            <!--<router-link :to="{ name: 'poll-list' }">-->
+                <!--<div class="icon">-->
+                    <!--<div class="arrow"></div>-->
+                    <!--<span class="text-back">Back list</span>-->
+                <!--</div>-->
+            <!--</router-link>-->
+        <!--</div>-->
     </div>
 </template>
 
