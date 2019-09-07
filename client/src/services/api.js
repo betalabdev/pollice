@@ -14,6 +14,16 @@ export default {
                 callback(error)
             })
     },
+    auth(data, callback) {
+        axios
+            .post(`${baseUrl}/auth/`, data)
+            .then(res => {
+                callback(null, res.data)
+            })
+            .catch(error => {
+                callback(error)
+            })
+    },
     vote(questionId, data, callback) {
         axios
             .post(`${baseUrl}/votes/${questionId}`, data)
