@@ -23,6 +23,7 @@ const pollsRouter = require('./routes/polls')
 const votesRouter = require('./routes/votes')
 const resultsRouter = require('./routes/results')
 const responsesRouter = require('./routes/responses')
+const qrRouter = require('./routes/qr')
 
 const app = express()
 
@@ -39,6 +40,7 @@ app.use('/polls', pollsRouter)
 app.use('/votes', votesRouter)
 app.use('/results', resultsRouter)
 app.use('/responses', responsesRouter)
+app.use('/qr', qrRouter)
 
 app.set('port', env.port)
 
