@@ -1,6 +1,6 @@
 var glob
-var baseUrl = 'https://localhost:8080/#'
-//var baseUrl = 'https://poll.betalab.dev/#'
+//var baseUrl = 'https://localhost:8080/#'
+var baseUrl = 'https://poll.betalab.dev/#'
 
 function addOverlay(el, id, wait) {
     var bbox = el.getBBox()

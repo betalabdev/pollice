@@ -5,7 +5,6 @@ const Response = require('../models/response')
 
 const socket = require('../services/socket')
 const form = require('../utils/form')
-const env = require('../config/env')
 
 const router = express.Router()
 
@@ -16,7 +15,7 @@ router.get('/:questionId', (req, res, next) => {
             res.status(400)
             return res.send(err)
         }
-        res.send(form.getVoteForm(env.serverUrl, question))
+        res.send(form.getVoteForm(question))
     })
 })
 
@@ -32,7 +31,7 @@ router.post('/:questionId', (req, res, next) => {
                     res.status(400)
                     return res.send(err)
                 }
-                res.send(form.getVoteForm(env.serverUrl, question, true))
+                res.send(form.getVoteForm(question, true))
                 socket.send(questionId, {
                     text: response.text,
                     type: 'response',
@@ -49,7 +48,7 @@ router.post('/:questionId', (req, res, next) => {
                         res.status(400)
                         return res.send(err)
                     }
-                    res.send(form.getVoteForm(env.serverUrl, question, true))
+                    res.send(form.getVoteForm(question, true))
                     socket.send(questionId, { questionId, type: 'vote' })
                 }
             )
