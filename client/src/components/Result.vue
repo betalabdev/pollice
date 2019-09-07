@@ -1,8 +1,8 @@
 <template>
     <div class="poll-view">
         <div class="poll-view__title" v-html="question.text"></div>
-        <div v-if="!question.openEnded" class="poll-view__results">
-            <div class="result" v-for="(answer, index) in result.answers" :key="index">
+        <div v-if="!question.openEnded" class="poll-view__results px-20-pc">
+            <div class="result mb-4" v-for="(answer, index) in result.answers" :key="index">
                 <div class="title">
                     {{ answer.text }}
                     <span class="percent">{{ calculatePercent(answer.votes)}}%</span>
@@ -13,13 +13,21 @@
                 </div>
             </div>
         </div>
-        <div v-if="question.openEnded" class="poll-view__results">
+        <div v-if="question.openEnded" class="poll-view__results px-20-pc">
             <div class="result" v-for="(response, index) in responses" :key="index">
                 <div class="title">
                     {{ index + 1 }}. {{ response.text }}
                 </div>
             </div>
         </div>
+        <!--<div class="position-relative py-4">-->
+            <!--<router-link :to="{ name: 'poll-list' }">-->
+                <!--<div class="icon">-->
+                    <!--<div class="arrow"></div>-->
+                    <!--<span class="text-back">Back list</span>-->
+                <!--</div>-->
+            <!--</router-link>-->
+        <!--</div>-->
     </div>
 </template>
 

@@ -2,58 +2,68 @@
     <div class="poll-view">
         <div class="poll-view__title">{{ questionId ? 'Edit poll' : 'New poll' }}</div>
         <div class="poll-view__inner">
-            <div class="poll-view__question">
-                <input class="poll-input" v-model="question.text" type="text" placeholder="Your Question..."/>
-            </div>
-            <div class="poll-view__answers">
-                <div
-                        v-for="(answer, index) in question.answers"
-                        :key="index"
-                        class="answer"
-                        :style="{zIndex: question.answers.length - index}"
-                >
-                    <input class="poll-input"
-                           :placeholder="'Answer ' + (index + 1)"
-                           @focus="createNewInput(index)"
-                           v-model="question.answers[index].text"
-                           type="text"
-                    />
-                    <span class="delete" @click="deleteInput(index)">X</span>
+            <div class="px-20-pc">
+                <div class="poll-view__question">
+                    <input class="poll-input" v-model="question.text" type="text" placeholder="Your Question..."/>
                 </div>
-            </div>
-            <div class="poll-view__options">
-                <div class="custom-checkbox">
-                    <label for="multiple" class="label-cbx">
-                        <input v-model="question.multiple" id="multiple" type="checkbox" class="invisible">
-                        <div class="checkbox">
-                            <svg width="48" height="48" viewBox="0 0 48 48">
-                                <circle cx="24" cy="24" r="11"></circle>
-                                <polyline points="19 26 24 29 29 18"></polyline>
-                            </svg>
-                        </div>
-                        <span class="checkbox-title">Allow multiple votes</span>
-                    </label>
+                <div class="poll-view__answers">
+                    <div
+                            v-for="(answer, index) in question.answers"
+                            :key="index"
+                            class="answer"
+                            :style="{zIndex: question.answers.length - index}"
+                    >
+                        <input class="poll-input"
+                               :placeholder="'Answer ' + (index + 1)"
+                               @focus="createNewInput(index)"
+                               v-model="question.answers[index].text"
+                               type="text"
+                        />
+                        <span class="delete" @click="deleteInput(index)">X</span>
+                    </div>
                 </div>
+                <div class="poll-view__options">
+                    <div class="custom-checkbox">
+                        <label for="multiple" class="label-cbx">
+                            <input v-model="question.multiple" id="multiple" type="checkbox" class="invisible">
+                            <div class="checkbox">
+                                <svg width="48" height="48" viewBox="0 0 48 48">
+                                    <circle cx="24" cy="24" r="11"></circle>
+                                    <polyline points="19 26 24 29 29 18"></polyline>
+                                </svg>
+                            </div>
+                            <span class="checkbox-title">Allow multiple votes</span>
+                        </label>
+                    </div>
 
-                <div class="custom-checkbox">
-                    <label for="openEnded" class="label-cbx">
-                        <input v-model="question.openEnded" id="openEnded" type="checkbox" class="invisible">
-                        <div class="checkbox">
-                            <svg width="48" height="48" viewBox="0 0 48 48">
-                                <circle cx="24" cy="24" r="11"></circle>
-                                <polyline points="19 26 24 29 29 18"></polyline>
-                            </svg>
-                        </div>
-                        <span class="checkbox-title">Is open-ended question</span>
-                    </label>
+                    <div class="custom-checkbox">
+                        <label for="openEnded" class="label-cbx">
+                            <input v-model="question.openEnded" id="openEnded" type="checkbox" class="invisible">
+                            <div class="checkbox">
+                                <svg width="48" height="48" viewBox="0 0 48 48">
+                                    <circle cx="24" cy="24" r="11"></circle>
+                                    <polyline points="19 26 24 29 29 18"></polyline>
+                                </svg>
+                            </div>
+                            <span class="checkbox-title">Is open-ended question</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="poll-view__submit">
+                    <button class="btn btn-save"
+                            @click="upsertPoll"
+                    >{{ questionId ? 'Update' : 'Save' }}
+                    </button>
                 </div>
             </div>
-            <div class="poll-view__submit">
-                <button class="btn btn-save"
-                        @click="upsertPoll"
-                >{{ questionId ? 'Update' : 'Save' }}
-                </button>
-            </div>
+            <!--<div class="position-relative mb-4">-->
+            <!--<router-link :to="{ name: 'poll-list' }">-->
+            <!--<div class="icon">-->
+            <!--<div class="arrow"></div>-->
+            <!--<span class="text-back">Back list</span>-->
+            <!--</div>-->
+            <!--</router-link>-->
+            <!--</div>-->
             <div
                     class="poll-view__info"
                     :class="{'success' : success === true, 'error' : success === false}"
@@ -140,6 +150,9 @@
                         else {
                             this.alert(true)
                             this.questionId = question._id
+                            setTimeout(() => {
+                                this.$router.push({name: 'poll-list'})
+                            }, 1500)
                         }
                     })
                 } else {
