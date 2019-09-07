@@ -1,4 +1,5 @@
 var glob
+var baseUrl = 'https://127.0.0.1:8080/#'
 
 function addOverlay(el, id, wait) {
     var bbox = el.getBBox()
@@ -24,7 +25,7 @@ function addOverlay(el, id, wait) {
         }
         top.navigator.keyboard.lock()
         div.innerHTML =
-            '<iframe style="border:0" src="https://127.0.0.1:8080/#' + (showQr ? '/qr/' : '/result/') + id +
+            '<iframe style="border:0" src="'+ baseUrl + (showQr ? '/qr/' : '/result/') + id +
             '" width="100%" height="100%"></iframe>'
         if (e) {
             e.stopPropagation()
