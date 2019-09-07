@@ -42,6 +42,25 @@ app.use('/responses', responsesRouter)
 app.use('/auth', authRouter)
 app.use('/qr', qrRouter)
 
+if (env.env == 'local') {
+  app.use(function(err, req, res, next) {
+      res.status(err.status || 500);
+      res.render('error', {
+          message: err.message,
+          error: err
+      });
+  });
+} else {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+  });
+}
+
+
 app.set('port', env.port)
 
 let server

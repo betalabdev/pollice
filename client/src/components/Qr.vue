@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import env from '../config/env'
+
 export default {
     name: 'qr-view',
     data() {
@@ -11,8 +13,8 @@ export default {
         }
     },
     mounted() {
-        this.questionId = this.$route.params.questionId
-        this.qrUrl = "https://qr.id.vin/hook?url=http://www.mocky.io/v2/5d7324c62f00009dbb7d4f07"
+        const questionId = this.$route.params.questionId
+        this.qrUrl = "https://qr.id.vin/hook?url=" + env.serverUrl + "/qr/" + questionId + "&method=GET"
     }
 }
 </script>

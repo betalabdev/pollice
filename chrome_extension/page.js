@@ -1,5 +1,5 @@
 var glob
-var baseUrl = 'https://127.0.0.1:8080/#'
+var baseUrl = 'https://localhost:8080/#'
 //var baseUrl = 'https://poll.betalab.dev/#'
 
 function addOverlay(el, id, wait) {
