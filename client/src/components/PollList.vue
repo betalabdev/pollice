@@ -9,8 +9,8 @@
                     <router-link :to="{ name: 'poll-detail', params: { questionId: question._id }}">
                         <img class="icon-edit" src="../assets/icon-edit.png" alt="">
                     </router-link>&nbsp;
-                    <router-link :to="{ name: 'vote', params: { questionId: question._id }}">
-                        <img class="icon-voting" src="../assets/icon-voting.png" alt="">
+                    <router-link :to="{ name: 'qr', params: { questionId: question._id }}">
+                        <img class="icon-voting" src="../assets/icon-qr.png" alt="">
                     </router-link>
                 </div>
                 <div class="input-has-copy">
