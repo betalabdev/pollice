@@ -34,7 +34,7 @@ function addOverlay(el, id, wait) {
         added = true
 
         var refresh = document.createElement('div')
-        refresh.innerHTML = '&#9851'
+        refresh.innerHTML = '&#x21BA;'
         refresh.style.display = 'flex'
         refresh.style.color = '#335ecf'
         refresh.style.cursor = 'pointer'
