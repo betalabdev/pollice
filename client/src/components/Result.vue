@@ -2,7 +2,12 @@
     <div class="poll-view">
         <div class="poll-view__title" v-html="question.text"></div>
         <div v-if="!question.openEnded" class="poll-view__results">
-            <bar-chart :data="getChartData(result)" />
+            <div v-if="question.multiple">
+                <bar-chart :result="result" />
+            </div>
+            <div v-if="!question.multiple">
+                <pie-chart :result="result" />
+            </div>
         </div>
         <div v-if="question.openEnded" class="poll-view__results px-20-pc">
             <div class="result" v-for="(response, index) in responses" :key="index">
@@ -24,23 +29,15 @@
 import api from '../services/api'
 import VueCharts from 'vue-chartjs'
 import BarChart from './BarChart'
+import PieChart from './PieChart'
 
 export default {
     name: 'poll-view',
-    components: { BarChart },
+    components: { BarChart, PieChart },
     data() {
         return {
             questionId: null,
             question: {},
-            colors: [
-                'rgba(255, 99, 132, 0.8)',
-                'rgba(255, 159, 64, 0.8)',
-                'rgba(255, 205, 86, 0.8)',
-                'rgba(75, 192, 192, 0.8)',
-                'rgba(54, 162, 235, 0.8)',
-                'rgba(153, 102, 255, 0.8)',
-                'rgba(201, 203, 207, 0.8)',
-            ],
         }
     },
     computed: {
@@ -82,17 +79,6 @@ export default {
             return votes < 2 ? 'vote' : 'votes'
         },
         getChartData(result) {
-            if (!result.answers) return
-            return {
-                labels: result.answers.map(a => a.text),
-                datasets: [
-                    {
-                        label: result.text,
-                        backgroundColor: this.colors,  // FIXME: Multiply this
-                        data: result.answers.map(a => a.votes),
-                    },
-                ],
-            }
         },
     },
 }

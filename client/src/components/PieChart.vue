@@ -1,8 +1,8 @@
 <script>
-import { Bar } from 'vue-chartjs'
+import { Pie } from 'vue-chartjs'
 
 export default {
-    extends: Bar,
+    extends: Pie,
     props: ['result'],
     data() {
         return {
@@ -17,7 +17,7 @@ export default {
             ],
             options: {
                 legend: {
-                    display: false,
+                    display: true,
                 },
             },
         }
