@@ -6,7 +6,7 @@
                 <div class="poll-view__question">
                     <input class="poll-input" v-model="question.text" type="text" placeholder="Your Question..."/>
                 </div>
-                <div class="poll-view__answers">
+                <div class="poll-view__answers" v-if="!question.openEnded">
                     <div
                             v-for="(answer, index) in question.answers"
                             :key="index"
@@ -56,14 +56,6 @@
                     </button>
                 </div>
             </div>
-            <!--<div class="position-relative mb-4">-->
-            <!--<router-link :to="{ name: 'poll-list' }">-->
-            <!--<div class="icon">-->
-            <!--<div class="arrow"></div>-->
-            <!--<span class="text-back">Back list</span>-->
-            <!--</div>-->
-            <!--</router-link>-->
-            <!--</div>-->
             <div
                     class="poll-view__info"
                     :class="{'success' : success === true, 'error' : success === false}"
@@ -84,11 +76,9 @@
         data() {
             return {
                 question: {
-                    text: 'Question text...',
+                    text: '',
                     answers: [
-                        {text: 'Option 1'},
-                        {text: 'Option 2'},
-                        {text: 'Option 3'},
+                        {text: ''},
                         {text: ''},
                     ],
                     multiple: false,
