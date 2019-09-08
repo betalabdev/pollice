@@ -20,6 +20,11 @@ const mutations = {
     auth_error(state){
         state.status = 'error'
     },
+
+    logout(state){
+        state.status = ''
+        state.token = ''
+    },
 }
 
 const actions = {
@@ -32,11 +37,17 @@ const actions = {
     handleError: ({ commit }) => {
         commit('auth_error')
         localStorage.removeItem('token)')
-    } 
+    },
+
+    logout: ({commit}) => {
+        commit('logout')
+        localStorage.removeItem('token')
+        delete axios.defaults.headers.common['Authorization']
+    },
 }
 
 const getters = {
-  isLoggedIn: state => !!state.token,
+    isLoggedIn: state => !!state.token,
 }
 
 export default {
