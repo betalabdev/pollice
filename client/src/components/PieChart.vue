@@ -19,6 +19,7 @@ export default {
                 legend: {
                     display: true,
                 },
+                maintainAspectRatio: false,
             },
         }
     },

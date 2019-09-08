@@ -11,6 +11,7 @@ const questionSchema = new Schema({
     text:  String,
     multiple: Boolean,
     openEnded: Boolean,
+    wordCloud: Boolean,
     answers: [answerSchema],
 });
 

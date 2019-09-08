@@ -48,6 +48,19 @@
                             <span class="checkbox-title">Is open-ended question</span>
                         </label>
                     </div>
+
+                    <div class="custom-checkbox" v-if="question.openEnded">
+                        <label for="wordCloud" class="label-cbx">
+                            <input v-model="question.wordCloud" id="wordCloud" type="checkbox" class="invisible">
+                            <div class="checkbox">
+                                <svg width="48" height="48" viewBox="0 0 48 48">
+                                    <circle cx="24" cy="24" r="11"></circle>
+                                    <polyline points="19 26 24 29 29 18"></polyline>
+                                </svg>
+                            </div>
+                            <span class="checkbox-title">Make a word cloud</span>
+                        </label>
+                    </div>
                 </div>
                 <div class="poll-view__submit">
                     <button class="btn btn-save"
@@ -83,6 +96,7 @@
                     ],
                     multiple: false,
                     openEnded: false,
+                    wordCloud: false,
                 },
                 isValid: false,
                 success: null,

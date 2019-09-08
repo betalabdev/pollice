@@ -2,25 +2,29 @@
     <div class="poll-view">
         <div class="poll-view__title" v-html="question.text"></div>
         <div v-if="!question.openEnded" class="poll-view__results">
-            <div v-if="question.multiple">
+            <div v-if="question.multiple" class="chart-container">
                 <bar-chart :result="result" />
             </div>
-            <div v-if="!question.multiple">
-                <pie-chart :result="result" />
+            <div v-else>
+                <pie-chart :result="result" class="chart-container"/>
             </div>
         </div>
-        <div v-if="question.openEnded" class="poll-view__results px-20-pc">
-            <!-- <div class="result" v-for="(response, index) in responses" :key="index">
-                <div class="title">{{ index + 1 }}. {{ response.text }}</div>
-            </div>-->
-            <vue-word-cloud
-                :words="words"
-                :color="color"
-                :rotation="rotation"
-                font-family="Roboto"
-                style="width: 100%; height: 375px;"
-                class="section"
-            />
+        <div v-else class="poll-view__results px-20-pc">
+            <div v-if="!question.wordCloud">
+                <div class="result" v-for="(response, index) in words" :key="index">
+                    <div class="title">{{ index + 1 }}. {{ response.text }}</div>
+                </div>
+            </div>
+            <div v-else>
+                <vue-word-cloud
+                    :words="words"
+                    :color="color"
+                    :rotation="rotation"
+                    font-family="Roboto"
+                    style="width: 100%; height: 375px;"
+                    class="section"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -57,8 +61,11 @@ export default {
     },
     watch: {
         responses: function() {
-            this.words = this.responses.map(r => ({ text: r._id, weight: r.count}))
-        }
+            this.words = this.responses.map(r => ({
+                text: r._id,
+                weight: r.count,
+            }))
+        },
     },
     mounted() {
         this.questionId = this.$route.params.questionId
