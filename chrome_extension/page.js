@@ -61,7 +61,7 @@ function addOverlay(el, id, wait) {
         })
 
         var qr = document.createElement('div')
-        qr.innerHTML = '&#9974;'
+        qr.innerHTML = '&#x2605;'
         qr.style.display = 'flex'
         qr.style.color = '#335ecf'
         qr.style.cursor = 'pointer'
