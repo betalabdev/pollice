@@ -131,7 +131,6 @@
                 else this.createPoll()
             },
             createPoll() {
-                this.validate()
                 if (this.isValid) {
                     api.createPoll(this.question, (err) => {
                         if (err) this.alert(false)
@@ -147,7 +146,6 @@
                 }
             },
             updatePoll() {
-                this.validate()
                 if (this.isValid) {
                     api.updatePoll(this.questionId, this.question, (err, question) => {
                         if (err) this.alert(false)
@@ -161,17 +159,6 @@
                     })
                 } else {
                     this.alert(false)
-                }
-            },
-            validate() {
-                this.question.answers = this.question.answers.filter(
-                    answer => answer.text && answer.text.length
-                )
-                var count = this.question.answers.length
-                if (count > 1) {
-                    this.isValid = true
-                } else {
-                    this.isValid = false
                 }
             },
             alert(success) {
