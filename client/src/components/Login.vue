@@ -74,6 +74,7 @@
                 })
             },
             onSignInError(error) {
+                console.error(error)
                 this.$router.push({name: 'login'})
             },
         },

@@ -21,7 +21,7 @@
                     :words="words"
                     :color="color"
                     :rotation="rotation"
-                    font-family="Roboto"
+                    font-family="Arial"
                     style="width: 100%; height: 375px;"
                     class="section"
                 />
