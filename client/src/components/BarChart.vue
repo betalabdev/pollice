@@ -30,11 +30,15 @@ export default {
                 datasets: [
                     {
                         label: result.text,
-                        backgroundColor: this.colors, // FIXME: Multiply this
+                        backgroundColor: this.getColor,
                         data: result.answers.map(a => a.votes),
                     },
                 ],
             }
+        },
+        getColor(context) {
+            const index = context.dataIndex
+            return this.colors[index % this.colors.length]
         },
     },
     mounted() {
