@@ -5,10 +5,12 @@
 </template>
 
 <script>
+import VueQrcode from '@chenfengyuan/vue-qrcode';
 import env from '../config/env'
 
 export default {
     name: 'qr-view',
+    components: { [VueQrcode.name]: VueQrcode },
     data() {
         return {
             qrUrl: null,

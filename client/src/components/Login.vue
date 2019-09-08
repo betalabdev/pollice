@@ -28,16 +28,24 @@ export default {
             var id_token = googleUser.getAuthResponse().id_token
             api.auth({ idtoken: id_token }, (err, token) => {
                 if (!err) {
-                    this.$store.dispatch('auth/login', token['token'], googleUser)
+                    this.$store.dispatch(
+                        'auth/login',
+                        token['token'],
+                        googleUser
+                    )
                     this.$router.push('/')
                 } else {
-                    this.$store.dispatch('auth/handleError', token['token'], googleUser)
-                    this.$router.push({name: 'login'})
+                    this.$store.dispatch(
+                        'auth/handleError',
+                        token['token'],
+                        googleUser
+                    )
+                    this.$router.push({ name: 'login' })
                 }
             })
         },
         onSignInError(error) {
-            console.log('OH NOES', error)
+            this.$router.push({ name: 'login' })
         },
     },
 }

@@ -10,26 +10,40 @@
             </div>
         </div>
         <div v-if="question.openEnded" class="poll-view__results px-20-pc">
-            <div class="result" v-for="(response, index) in responses" :key="index">
+            <!-- <div class="result" v-for="(response, index) in responses" :key="index">
                 <div class="title">{{ index + 1 }}. {{ response.text }}</div>
-            </div>
+            </div>-->
+            <vue-word-cloud
+                :words="responses"
+                :color="color"
+                :rotation="rotation"
+                font-family="Roboto"
+                style="width: 100%; height: 375px;"
+                class="section"
+            />
         </div>
     </div>
 </template>
 
 <script>
-import api from '../services/api'
+import VueWordCloud from 'vuewordcloud'
+import Chance from 'chance'
+
 import VueCharts from 'vue-chartjs'
 import BarChart from './BarChart'
 import PieChart from './PieChart'
 
+import api from '../services/api'
+
 export default {
     name: 'poll-view',
-    components: { BarChart, PieChart },
+    components: { BarChart, PieChart, VueWordCloud },
     data() {
         return {
             questionId: null,
             question: {},
+            colors: ['#ffd077', '#3bc4c7', '#3a9eea', '#ff4e69', '#461e47'],
+            rotations: [0, 1 / 8, 3 / 4, 7 / 8],
         }
     },
     computed: {
@@ -64,13 +78,13 @@ export default {
         this.$wsConnect(this.questionId)
     },
     methods: {
-        calculatePercent(votes) {
-            return parseInt((10000 * votes) / this.result.totalVotes) / 100 || 0
+        rotation(word) {
+            var chance = new Chance(word.text)
+            return chance.pickone(this.rotations)
         },
-        getLabel(votes) {
-            return votes < 2 ? 'vote' : 'votes'
-        },
-        getChartData(result) {
+        color(word) {
+            var chance = new Chance(word.text)
+            return chance.pickone(this.colors)
         },
     },
 }

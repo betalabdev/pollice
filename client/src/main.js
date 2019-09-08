@@ -3,7 +3,6 @@ import App from './App.vue'
 
 import VueRouter from 'vue-router'
 import VueWebsocket from './services/socket'
-import VueQrcode from '@chenfengyuan/vue-qrcode';
 
 import Poll from './components/Poll'
 import Login from './components/Login'
@@ -29,8 +28,6 @@ Vue.use(VueWebsocket, {
   store,
 })
 Vue.use(GSignInButton)
-
-Vue.component(VueQrcode.name, VueQrcode);
 
 Vue.config.productionTip = false
 
