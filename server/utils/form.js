@@ -25,7 +25,7 @@ const getVoteForm = (question, again) => {
                             : question.multiple
                             ? 'checkbox'
                             : 'radio',
-                        input_type: question.openEnded ? 'textarea' : 'text',
+                        input_type: question.openEnded && !question.wordCloud ? 'textarea' : 'text',
                         display_type: 'inline',
                         required: true,
                         error: 'Opps! Please try again!',
