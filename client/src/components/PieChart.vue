@@ -22,6 +22,16 @@ export default {
             },
         }
     },
+    computed: {
+        chartColors() {
+            const dup = Math.floor(this.result.length / this.colors)
+            let colors = this.colors
+            for (let i = 0; i < dup; i++) {
+                colors = this.colors.concat(colors)
+            }
+            return colors
+        },
+    },
     methods: {
         getChartData(result) {
             if (!result.answers) return
@@ -30,15 +40,11 @@ export default {
                 datasets: [
                     {
                         label: result.text,
-                        backgroundColor: this.getColor,
+                        backgroundColor: this.chartColors,
                         data: result.answers.map(a => a.votes),
                     },
                 ],
             }
-        },
-        getColor(context) {
-            const index = context.dataIndex
-            return this.colors[index % this.colors.length]
         },
     },
     mounted() {
