@@ -1,9 +1,16 @@
 <template>
-    <g-signin-button
-        :params="googleSignInParams"
-        @success="onSignInSuccess"
-        @error="onSignInError"
-    >Sign in with Google Email</g-signin-button>
+    <div class="poll-view">
+        <div class="poll-view__title">
+            <h1>Welcome to Pollice app</h1>
+        </div>
+        <g-signin-button
+            :params="googleSignInParams"
+            @success="onSignInSuccess"
+            @error="onSignInError"
+        >Sign in with Google Email</g-signin-button>
+
+        <h2>Download Chrome Extension <a href="https://gitlab.com/betalabdev/pollice/-/archive/master/pollice-master.zip?path=chrome_extension">here</a>.</h2>
+    </div>
 </template>
 
 <script>
