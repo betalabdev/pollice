@@ -148,6 +148,7 @@ export default {
             else this.createPoll()
         },
         createPoll() {
+            this.clean()
             api.createPoll(this.question, err => {
                 if (err) this.alert(false)
                 else {
@@ -159,6 +160,7 @@ export default {
             })
         },
         updatePoll() {
+            this.clean()
             api.updatePoll(this.questionId, this.question, (err, question) => {
                 if (err) this.alert(false)
                 else {
@@ -169,6 +171,11 @@ export default {
                     }, 1500)
                 }
             })
+        },
+        clean() {
+            this.question.answers = this.question.answers.filter(
+                answer => answer.text && answer.text.length
+            )
         },
         alert(success) {
             this.success = success
