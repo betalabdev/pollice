@@ -14,14 +14,6 @@
                 <div class="title">{{ index + 1 }}. {{ response.text }}</div>
             </div>
         </div>
-        <!--<div class="position-relative py-4">-->
-            <!--<router-link :to="{ name: 'poll-list' }">-->
-                <!--<div class="icon">-->
-                    <!--<div class="arrow"></div>-->
-                    <!--<span class="text-back">Back list</span>-->
-                <!--</div>-->
-            <!--</router-link>-->
-        <!--</div>-->
     </div>
 </template>
 
