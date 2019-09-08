@@ -1,24 +1,25 @@
 @import "./variables.scss";
 
-html {
-    min-height: 100%;
-}
-body {
-    margin: auto;
-    font-size: 16px;
-    min-height: 100%;
-    box-sizing: border-box;
-    background: #e0e1ea;
-    font-family: Arial, Helvetica, sans-serif;
+@font-face {
+    font-family: 'roboto_condensedregular';
+    src: url('/fonts/robotocondensed-regular-webfont.woff2') format('woff2'),
+    url('/fonts/robotocondensed-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-#app {
-    min-height: 100%;
+html, body, #app {
+    margin: auto;
+    font-size: 16px;
+    height: 100%;
+    box-sizing: border-box;
+    background: #e0e1ea;
+    font-family: roboto_condensedregular, Arial, Helvetica, sans-serif;
 }
 
 .poll-view {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     background-color: $white-primary;
     position: relative;
     transition: all 0.2s ease-in-out;
@@ -306,7 +307,6 @@ body {
     color: #eff3ff;
     transition: 0.5s;
     background-color: $poll-primary;
-    //background-image: linear-gradient(to right, #335ecf 0%, #26a0da 51%, #335ecf 100%);
 
     &:hover {
         color: #FFC107;
@@ -360,6 +360,73 @@ body {
     padding: 6rem;
     font-family: cursive;
 }
+.d-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.d-inline {
+    display: inline-block;
+}
+.sign-in-with-google {
+    background-color: #4285f4;
+    border: none;
+    color: $white-primary;
+    margin: 6rem 0;
+    .google-logo {
+        background-color: $white-primary;
+        border: 1px solid #4285f4;
+        padding: 1rem;
+    }
+    .google-brand-name {
+        font-family: Roboto, arial, sans-serif;
+        font-weight: 600;
+    }
+}
+.g-signin-button {
+    @extend .text-center;
+}
+.download-extension {
+    a {
+        color: $black-primary;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-decoration: none;
+        &:hover {
+            color: $poll-primary;
+        }
+    }
+}
+.ended-question {
+    .index {
+        color: $white-primary;
+        font-weight: 600;
+        padding: 1rem;
+        border: 1px solid rgba($poll-primary, .8);
+        background: rgba($poll-primary, .8);
+        border-top-left-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+    }
+    .answer {
+        padding: 1rem;
+        flex-grow: 1;
+        color: $black-primary;
+        background: $white-primary;
+        border-top: 1px solid rgba($poll-primary, .8);
+        border-right: 1px solid rgba($poll-primary, .8);
+        border-bottom: 1px solid rgba($poll-primary, .8);
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+}
+
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 80vh;
+    width: 80vw;
+}
+
 
 $class-margin-bottom: mb !default;
 $class-margin-left-right: mx !default;
@@ -414,11 +481,4 @@ $class-padding-bottom: pb !default;
     100% {
         opacity: 0;
     }
-}
-
-.chart-container {
-    position: relative;
-    margin: auto;
-    height: 80vh;
-    width: 80vw;
 }

@@ -11,8 +11,9 @@
         </div>
         <div v-else class="poll-view__results px-20-pc">
             <div v-if="!question.wordCloud">
-                <div class="result" v-for="(response, index) in words" :key="index">
-                    <div class="title">{{ index + 1 }}. {{ response.text }}</div>
+                <div class="ended-question d-flex mb-6" v-for="(response, index) in words" :key="index">
+                    <div class="index">{{ index + 1 }}</div>
+                    <div class="answer">{{ response.text }}</div>
                 </div>
             </div>
             <div v-else>
