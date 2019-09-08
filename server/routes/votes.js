@@ -26,7 +26,7 @@ router.post('/:questionId', (req, res, next) => {
                 return res.send(err)
             }
             res.send(vote)
-            socket.send(questionId, { questionId, type: 'vote' })
+            socket.send(questionId, { payload: { questionId }, type: 'vote' })
         }
     )
 })

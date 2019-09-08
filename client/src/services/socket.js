@@ -17,8 +17,8 @@ export default {
 
             ws.onmessage = event => {
                 const data = JSON.parse(event.data)
-                if (data && data.type == 'vote') handleVote(data)
-                else if (data && data.type == 'response') handleResponse(data)
+                if (data && data.type == 'vote') handleVote(data.payload)
+                else if (data && data.type == 'response') handleResponse(data.payload)
             }
 
             ws.onclose = event => {

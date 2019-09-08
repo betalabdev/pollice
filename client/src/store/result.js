@@ -18,7 +18,8 @@ const mutations = {
         state.responses = payload
     },
     addResponse: (state, payload) => {
-        state.responses.push(payload)
+        const responses = state.responses.filter(r => r._id != payload._id)
+        state.responses = [...responses, payload]
     }
 }
 

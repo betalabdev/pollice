@@ -32,9 +32,13 @@ router.post('/:questionId', (req, res, next) => {
                     return res.send(err)
                 }
                 res.send(form.getVoteForm(question, true))
-                socket.send(questionId, {
-                    text: response.text,
-                    type: 'response',
+                const text = response.text
+                Response.count({ questionId, text }, (err, count) => {
+                    if (!err)
+                        socket.send(questionId, {
+                            payload: { _id: text, count },
+                            type: 'response',
+                        })
                 })
             })
         } else {
@@ -49,7 +53,10 @@ router.post('/:questionId', (req, res, next) => {
                         return res.send(err)
                     }
                     res.send(form.getVoteForm(question, true))
-                    socket.send(questionId, { questionId, type: 'vote' })
+                    socket.send(questionId, {
+                        payload: { questionId },
+                        type: 'vote',
+                    })
                 }
             )
         }

@@ -14,7 +14,7 @@
                 <div class="title">{{ index + 1 }}. {{ response.text }}</div>
             </div>-->
             <vue-word-cloud
-                :words="responses"
+                :words="words"
                 :color="color"
                 :rotation="rotation"
                 font-family="Roboto"
@@ -42,6 +42,7 @@ export default {
         return {
             questionId: null,
             question: {},
+            words: [],
             colors: ['#ffd077', '#3bc4c7', '#3a9eea', '#ff4e69', '#461e47'],
             rotations: [0, 1 / 8, 3 / 4, 7 / 8],
         }
@@ -53,6 +54,11 @@ export default {
         result() {
             return this.$store.getters['result/getResult']
         },
+    },
+    watch: {
+        responses: function() {
+            this.words = this.responses.map(r => ({ text: r._id, weight: r.count}))
+        }
     },
     mounted() {
         this.questionId = this.$route.params.questionId

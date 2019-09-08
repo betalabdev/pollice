@@ -5,13 +5,18 @@ const socket = require('../services/socket')
 const router = express.Router()
 
 router.get('/:questionId', (req, res, next) => {
-    Response.find({ questionId: req.params.questionId }, (err, responses) => {
-        if (err) {
+    Response.aggregate([
+        { $match: { questionId: req.params.questionId } },
+        { $group: { _id: '$text', count: { $sum: 1 } } },
+    ]).then(
+        responses => {
+            res.send(responses)
+        },
+        err => {
             res.status(400)
-            return res.send(err)
+            res.send(err)
         }
-        res.send(responses)
-    })
+    )
 })
 
 router.post('/:questionId', (req, res, next) => {
@@ -23,7 +28,10 @@ router.post('/:questionId', (req, res, next) => {
             return res.send(err)
         }
         res.send(response)
-        socket.send(questionId, { text: response.text, type: 'response' })
+        const text = response.text
+        Response.count({ questionId, text }, (err, count) => {
+            if (!err) socket.send(questionId, { payload: { _id: text, count }, type: 'response' })
+        })
     })
 })
 
