@@ -1,12 +1,15 @@
 <template>
-    <p>You have been logged out! <a href="/login">Click here to log in.</a></p>
+    <p>
+        You have been logged out!
+        <router-link :to="{ name: 'login' }">Click here to login</router-link>.
+    </p>
 </template>
 
 <script>
 export default {
-    name : 'log-out',
+    name: 'log-out',
     mounted() {
-        this.$store.dispatch('auth/logout');
+        this.$store.dispatch('auth/logout')
     },
 }
 </script>
